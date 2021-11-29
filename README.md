@@ -4,6 +4,10 @@ Este projeto tem por objetivo criar uma API REST para integração com um aplica
 
 > Esta API além de atuar como back-end do aplicativo, irá prover inicialmente uma página de exibição das sugestões registradas; será utilizado o Framework Matheriaze para prover a aparência mais próxima possível de uma aplicação Android Nativa.
 
+> A aplicação foi desenvolvida utilizando boas práticas de programação, sendo construída em camadas as as responsabilidades bem definidas conforme a ilutração abaixo.
+
+![](diagrama.png)
+
 # PARTE I - Criar API
 
 ## Criar projeto Spring Boot
