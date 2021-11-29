@@ -463,19 +463,21 @@ public class IndexController {
 }
 ```
 
+3. Adicione as imagens estáticas para serem exibidas na aplicação web; inclua o diretório `resources/static/images` e as imagens inclusas neste [link](https://drive.google.com/drive/folders/1ksm15xrLPh11SrWXdacpeRVHA7n6kS3K?usp=sharing).
+
 3. Atualize o arquivo `pom.xml`, dentro da tag `<dependencies></dependencies>` incluindo a dependencia para formatação de datas da nova API Java Time e conversão de Entities para DTOs.
 
 ```xml
-		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-java8time</artifactId>
-			<version>3.0.4.RELEASE</version>
-		</dependency>
-    <dependency>
-			<groupId>org.modelmapper</groupId>
-			<artifactId>modelmapper</artifactId>
-			<version>2.4.4</version>
-		</dependency>
+<dependency>
+	<groupId>org.thymeleaf.extras</groupId>
+	<artifactId>thymeleaf-extras-java8time</artifactId>
+	<version>3.0.4.RELEASE</version>
+</dependency>
+<dependency>
+	<groupId>org.modelmapper</groupId>
+	<artifactId>modelmapper</artifactId>
+	<version>2.4.4</version>
+</dependency>
 ```
 
 ## Teste a página de sugestões
