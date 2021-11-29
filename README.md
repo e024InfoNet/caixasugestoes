@@ -329,6 +329,8 @@ O endpoint é responsável por capturar a requisição do aplicativo e persistir
 
 #### Crie o endpoint SugestaoController
 
+No pacote `api.resource` crie a classe `SugestaoController`.
+
 ```java
 @RestController
 @RequestMapping("/api/v1")
