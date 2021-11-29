@@ -18,7 +18,7 @@ Para facilitar a criação do projeto; iremos criar o projeto na aplicação web
 
 Crie o projeto conforme o modelo abaixo atentando-se às dependencias indicadas
 
-![](images/initializr.png)
+![](initializr.png)
 
 Após baixar o projeto com suas dependencias, descompacte-o e o abra com o IntelliJ Idea. A IDE irá realizar o download de todas as dependencias necessárias e realizar o `build`.
 
