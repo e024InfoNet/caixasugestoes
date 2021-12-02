@@ -22,6 +22,27 @@ Crie o projeto conforme o modelo abaixo atentando-se às dependencias indicadas
 
 Após baixar o projeto com suas dependencias, descompacte-o e o abra com o IntelliJ Idea. A IDE irá realizar o download de todas as dependencias necessárias e realizar o `build`.
 
+### Atualizar as dependências do projeto
+
+Atualize o arquivo `pom.xml`, dentro da tag `<dependencies></dependencies>` incluindo a dependencia para formatação de datas da nova API Java Time e conversão de Entities para DTOs nos passos a seguir. Não esqueça de compilar novamente o projeto para baixar as dependências.
+
+```xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+<dependency>
+	<groupId>org.thymeleaf.extras</groupId>
+	<artifactId>thymeleaf-extras-java8time</artifactId>
+	<version>3.0.4.RELEASE</version>
+</dependency>
+<dependency>
+	<groupId>org.modelmapper</groupId>
+	<artifactId>modelmapper</artifactId>
+	<version>2.4.4</version>
+</dependency>
+```
+
 ## Criar a modelagem do Banco de dados com ORM
 
 Neste projeto utilizaremos a modelagem objeto-relacional, ao invés de criarmos os scripts de banco de dados, o `JPA` se encarregará de criar as tabelas e inicializar a conexão com o Banco de dados.
@@ -139,7 +160,9 @@ Sim. E só isso mesmo! Esta interface já nos provê os métodos CRUD convencion
 
 ### Configure o acesso à base de dados
 
-Edite o arquivo `application.properties` no diretório `resources` para que seja compatível com sua base de dados local.
+Edite o arquivo `application.properties` no diretório `resources` para que seja compatível com sua base de dados local. 
+
+> Você precisa criar previamente um banco de dados em seu servidor MySQL com o nome `etec`.
 
 ```properties
 server.port=9000
@@ -167,7 +190,7 @@ Já temos a camada `Model` definida com o entity e o repository definidos; vamos
 ```java
 public interface ISugestaoService {
     Sugestao salvar(Sugestao sugestao);
-    List<Sugestao> buscarTodos();
+    List<SugestaoDTO> buscarTodos();
     Optional<Sugestao> buscarPorId(Long id);
 }
 ```
@@ -178,24 +201,9 @@ public interface ISugestaoService {
 @Service
 public class SugestaoService implements ISugestaoService {
 
-    private static final Map<String, String> mCursos = Map.of(
-            "sistemas", "Desenvolvimento de Sistemas",
-            "administracao", "Administração",
-            "logistica", "Logística");
-
-    private static final Map<String, String> mTipoSugestao = Map.of(
-            "sugestao", "Sugestão",
-            "reclamacao", "Reclamação",
-            "comentario", "Comentário",
-            "elogio", "Elogio"
-    );
-
-    private static final Map<String, String> mUrlImagens = Map.of(
-            "sugestao", "idea.png",
-            "reclamacao", "brokenheart.png",
-            "comentario", "chat.png",
-            "elogio", "like.png"
-    );
+    private static final Map<String, String> mCursos = new HashMap<>();
+    private static final Map<String, String> mTipoSugestao = new HashMap<>();
+    private static final Map<String, String> mUrlImagens = new HashMap<>();
 
     @Autowired
     private SugestaoRepository repository;
@@ -207,6 +215,8 @@ public class SugestaoService implements ISugestaoService {
 
     @Override
     public List<SugestaoDTO> buscarTodos() {
+    	configurarMaps();
+	
         List<SugestaoDTO> sugestoes = repository.findAll()
                 .stream()
                 .map(s -> new ModelMapper().map(s, SugestaoDTO.class))
@@ -225,6 +235,22 @@ public class SugestaoService implements ISugestaoService {
     @Override
     public Optional<Sugestao> buscarPorId(Long id) {
         return repository.findById(id);
+    }
+    
+    private static void configurarMaps() {
+        mCursos.put("sistemas", "Desenvolvimento de Sistemas");
+        mCursos.put("administracao", "Administração");
+        mCursos.put("logistica", "Logística");
+        
+        mTipoSugestao.put("sugestao", "Sugestão");
+        mTipoSugestao.put("reclamacao", "Reclamação");
+        mTipoSugestao.put("comentario", "Comentário");
+        mTipoSugestao.put("elogio", "Elogio");
+        
+        mUrlImagens.put("sugestao", "idea.png");
+        mUrlImagens.put("reclamacao", "brokenheart.png");
+        mUrlImagens.put("comentario", "chat.png");
+        mUrlImagens.put("elogio", "like.png");
     }
 }
 ```
@@ -468,21 +494,6 @@ public class IndexController {
 ```
 
 3. Adicione as imagens estáticas para serem exibidas na aplicação web; inclua o diretório `resources/static/images` e as imagens inclusas neste [link](https://drive.google.com/drive/folders/1ksm15xrLPh11SrWXdacpeRVHA7n6kS3K?usp=sharing).
-
-3. Atualize o arquivo `pom.xml`, dentro da tag `<dependencies></dependencies>` incluindo a dependencia para formatação de datas da nova API Java Time e conversão de Entities para DTOs.
-
-```xml
-<dependency>
-	<groupId>org.thymeleaf.extras</groupId>
-	<artifactId>thymeleaf-extras-java8time</artifactId>
-	<version>3.0.4.RELEASE</version>
-</dependency>
-<dependency>
-	<groupId>org.modelmapper</groupId>
-	<artifactId>modelmapper</artifactId>
-	<version>2.4.4</version>
-</dependency>
-```
 
 ## Teste a página de sugestões
 
