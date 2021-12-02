@@ -6,7 +6,7 @@ Este projeto tem por objetivo criar uma API REST para integração com um aplica
 
 > A aplicação foi desenvolvida utilizando boas práticas de programação, sendo construída em camadas as as responsabilidades bem definidas conforme a ilutração abaixo.
 
-![](diagrama.png)
+![](diagrama_api.png)
 
 # PARTE I - Criar API
 
